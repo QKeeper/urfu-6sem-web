@@ -2,6 +2,7 @@ import { API } from "@/api";
 import { ILoginFields, ILoginResponse } from "@/api.models";
 import Form from "@/components/ui/Form/Form";
 import { AxiosError, isAxiosError } from "axios";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +16,10 @@ function LoginPage() {
 
   const navigate = useNavigate();
 
+  const [isPending, setIsPending] = useState(false);
+
   const onSubmit: SubmitHandler<ILoginFields> = (data) => {
+    setIsPending(true);
     API.Auth.login(data)
       .then(() => navigate("/"))
       .catch((err) => {
@@ -27,7 +31,8 @@ function LoginPage() {
         } else {
           setError("root", { message: "Unknown error" });
         }
-      });
+      })
+      .finally(() => setIsPending(false));
   };
 
   return (
@@ -41,6 +46,7 @@ function LoginPage() {
         {errors.username?.type == "required" && <Form.Error>Field is required</Form.Error>}
         {errors.username?.type == "minLength" && <Form.Error>Minimum 3 characters long</Form.Error>}
         {errors.username?.type == "maxLength" && <Form.Error>Maximum 32 characters long</Form.Error>}
+
         <Form.Input
           type="password"
           placeholder="Password"
@@ -51,7 +57,12 @@ function LoginPage() {
         {errors.password?.type == "maxLength" && <Form.Error>Maximum 64 characters long</Form.Error>}
 
         {errors.root && <Form.Error>{errors.root.message}</Form.Error>}
-        <Form.Submit>Login</Form.Submit>
+
+        <Form.Submit isPending={isPending} disabled={isPending}>
+          Login
+        </Form.Submit>
+
+        <Form.Link to="/register">Don't have an account yet?</Form.Link>
       </Form>
     </div>
   );

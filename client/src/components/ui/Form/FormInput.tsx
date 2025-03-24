@@ -1,7 +1,7 @@
 import cn from "@/utils/cn";
 import { ComponentProps, forwardRef } from "react";
 
-const Input = forwardRef<HTMLInputElement, ComponentProps<"input">>(({ className, ...rest }, ref) => {
+const FormInput = forwardRef<HTMLInputElement, ComponentProps<"input">>(({ className, ...rest }, ref) => {
   return (
     <input
       ref={ref}
@@ -14,4 +14,4 @@ const Input = forwardRef<HTMLInputElement, ComponentProps<"input">>(({ className
   );
 });
 
-export default Input;
+export default FormInput;

@@ -1,15 +1,17 @@
 import { ComponentProps } from "react";
-import Error from "./Error";
-import Input from "./Input";
+import FormError from "./FormError";
+import FormInput from "./FormInput";
 import cn from "@/utils/cn";
-import Submit from "./Submit";
+import FormSubmit from "./FormSubmit";
+import FormLink from "./FormLink";
 
 function Form({ className, ...rest }: ComponentProps<"form">) {
   return <form className={cn("flex flex-col gap-2", className)} {...rest} />;
 }
 
-Form.Error = Error;
-Form.Input = Input;
-Form.Submit = Submit;
+Form.Error = FormError;
+Form.Input = FormInput;
+Form.Submit = FormSubmit;
+Form.Link = FormLink;
 
 export default Form;
