@@ -13,6 +13,8 @@ export class AuthController {
     .withMessage("Must be a string")
     .isLength({ min: 3 })
     .withMessage("At least 3 characters length")
+    .isLength({ max: 32 })
+    .withMessage("Maximum 32 characters long")
     .toLowerCase();
 
   private validatePassword = body("password")
@@ -20,12 +22,14 @@ export class AuthController {
     .isString()
     .withMessage("Must be a string")
     .isLength({ min: 6 })
-    .withMessage("At least 6 characters length");
+    .withMessage("At least 6 characters length")
+    .isLength({ max: 64 })
+    .withMessage("Maximum 64 characters long");
 
   validateRegister = [this.validateUsername, this.validatePassword, validate];
   validateLogin = [this.validateUsername, this.validatePassword, validate];
 
-  async register(req: Request, res: Response) {
+  register = async (req: Request, res: Response) => {
     try {
       const { token } = await this.authService.createUser(req.body);
       return void res
@@ -35,9 +39,9 @@ export class AuthController {
       console.error(error);
       return void res.status(500).json({ message: "Failed to create user" });
     }
-  }
+  };
 
-  async login(req: Request, res: Response) {
+  login = async (req: Request, res: Response) => {
     try {
       const { token } = await this.authService.loginUser(req.body);
       return void res
@@ -47,15 +51,15 @@ export class AuthController {
       console.error(error);
       return void res.status(500).json({ message: "Failed to login user" });
     }
-  }
+  };
 
-  async logout(_: Request, res: Response) {
+  logout = (_: Request, res: Response) => {
     return void res
       .clearCookie(TOKEN, { secure: true, httpOnly: true, sameSite: "strict" })
       .sendStatus(200);
-  }
+  };
 
-  async me(req: Request, res: Response) {
+  me = (req: Request, res: Response) => {
     return void (req.cookies.token ? res.send(req.user) : res.sendStatus(401));
-  }
+  };
 }
