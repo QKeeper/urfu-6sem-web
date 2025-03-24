@@ -2,7 +2,7 @@ import { API } from "@/api";
 import { ILoginFields, ILoginResponse } from "@/api.models";
 import Form from "@/components/ui/Form/Form";
 import { AxiosError, isAxiosError } from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -18,18 +18,9 @@ function LoginPage() {
 
   const [isPending, setIsPending] = useState(false);
 
-  const controller = useRef(new AbortController());
-
-  useEffect(() => {
-    const controllerRef = controller.current;
-    return () => {
-      controllerRef.abort();
-    };
-  });
-
   const onSubmit: SubmitHandler<ILoginFields> = (data) => {
     setIsPending(true);
-    API.Auth.login(data, { signal: controller.current.signal })
+    API.Auth.login(data)
       .then(() => navigate("/"))
       .catch((err) => {
         if (isAxiosError(err)) {
