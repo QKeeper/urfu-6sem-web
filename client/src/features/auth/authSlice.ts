@@ -31,14 +31,14 @@ export const authSlice = createAppSlice({
         rejected: (state) => {
           state.isPending = false;
         },
-      }
+      },
     ),
   }),
   selectors: {
     selectUser: (state) => state.user,
-    selectIsPending: (state) => state.isPending,
+    selectUserIsPending: (state) => state.isPending,
   },
 });
 
 export const { setUser, fetchUser } = authSlice.actions;
-export const { selectUser, selectIsPending } = authSlice.selectors;
+export const { selectUser, selectUserIsPending } = authSlice.selectors;

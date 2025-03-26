@@ -6,7 +6,7 @@ interface ShimmerProps {
 }
 
 function ShimmerButton({ className }: ShimmerProps) {
-  return <div className={cn("bg-neutral-100 h-6 rounded", className)} />;
+  return <div className={cn("h-7 rounded bg-gray-100", className)} />;
 }
 
 export default ShimmerButton;

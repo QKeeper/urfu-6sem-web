@@ -7,7 +7,7 @@ const FormInput = forwardRef<HTMLInputElement, ComponentProps<"input">>(({ class
       ref={ref}
       {...rest}
       className={cn(
-        "rounded border border-gray-500 px-4 py-2 text-sm tracking-wide focus:border-gray-950 focus:bg-gray-50 focus:outline-none",
+        "rounded px-4 py-2 text-sm tracking-wide outline outline-gray-500 focus:bg-gray-50 focus:outline-gray-950",
         className,
       )}
     />

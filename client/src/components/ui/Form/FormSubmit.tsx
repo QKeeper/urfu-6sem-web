@@ -12,7 +12,7 @@ const FormSubmit = forwardRef<HTMLButtonElement, FormSubmitProps>(
       <button
         ref={ref}
         className={cn(
-          "flex h-10 items-center justify-center rounded bg-gray-950 font-medium tracking-wide text-gray-50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+          "flex h-9 items-center justify-center rounded bg-gray-950 px-3 text-sm font-medium tracking-wide text-gray-50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
           { "": isPending },
           className,
         )}
