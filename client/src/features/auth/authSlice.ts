@@ -1,7 +1,7 @@
 import { createAppSlice } from "@/app/hooks";
 import { IAuthState, IUser } from "./authModel";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { authAPI } from "./authApi";
+import { API } from "@/api";
 
 const initialState: IAuthState = {
   isPending: true,
@@ -15,24 +15,18 @@ export const authSlice = createAppSlice({
     setUser: create.reducer((state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
     }),
-    fetchUser: create.asyncThunk(
-      async () => {
-        const user = await authAPI.getMe();
-        return user;
+    fetchUser: create.asyncThunk(API.Auth.me, {
+      pending: (state) => {
+        state.isPending = true;
       },
-      {
-        pending: (state) => {
-          state.isPending = true;
-        },
-        fulfilled: (state, action) => {
-          state.isPending = false;
-          state.user = action.payload;
-        },
-        rejected: (state) => {
-          state.isPending = false;
-        },
+      fulfilled: (state, action) => {
+        state.isPending = false;
+        state.user = action.payload;
       },
-    ),
+      rejected: (state) => {
+        state.isPending = false;
+      },
+    }),
   }),
   selectors: {
     selectUser: (state) => state.user,

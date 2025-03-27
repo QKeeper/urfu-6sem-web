@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ILoginFields } from "./api.models";
+import { IUser } from "./features/auth/authModel";
 
 const baseURL = import.meta.env.PROD ? "/api" : "http://localhost:3000/api";
 
@@ -23,6 +24,16 @@ export const API = {
     },
     register: async (data: ILoginFields) => {
       const response = await apiClient.post<ILoginFields>("/auth/register", data);
+      return response.data;
+    },
+    me: async () => {
+      const response = await apiClient.get<IUser>("/auth/me");
+      return response.data;
+    },
+  },
+  User: {
+    getByUsername: async (username: string) => {
+      const response = await apiClient.get<IUser | null>("/users/" + username);
       return response.data;
     },
   },

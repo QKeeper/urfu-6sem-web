@@ -1,8 +1,9 @@
 import { useAppSelector } from "@/app/hooks";
 import { selectUserIsPending, selectUser } from "@/features/auth/authSlice";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 import AppHeaderShimmer from "./AppHeaderShimmer";
 import { User2Icon } from "lucide-react";
+import cn from "@/utils/cn";
 
 export default function AppHeader() {
   const user = useAppSelector(selectUser);
@@ -11,27 +12,34 @@ export default function AppHeader() {
   if (isPending) return <AppHeaderShimmer />;
 
   return (
-    <header>
-      <div className="container mx-auto flex h-10 items-center gap-1">
+    <header className="border-b border-gray-300">
+      <div className="container mx-auto flex h-10 items-center gap-1 px-1">
+        <NavLink to="/">Tasks</NavLink>
         {!user ? (
           <>
-            <Link to="/login" className="ml-auto">
+            <NavLink to="/login" className="ml-auto">
               Login
-            </Link>
-            <Link to="/register">Register</Link>
+            </NavLink>
+            <NavLink to="/register">Register</NavLink>
           </>
         ) : (
           <>
-            <Link
-              to={"/user/" + user.username}
-              className="ml-auto flex items-center justify-center gap-2 rounded px-2 py-1 hover:bg-gray-100"
-            >
+            <NavLink to={"/user/" + user.username} className="ml-auto">
               <User2Icon className="size-4" />
-              {"" + user.username}
-            </Link>
+              {user.username}
+            </NavLink>
           </>
         )}
       </div>
     </header>
+  );
+}
+
+function NavLink({ className, ...rest }: LinkProps) {
+  return (
+    <Link
+      {...rest}
+      className={cn("flex items-center justify-center gap-2 rounded px-2 py-1 hover:bg-gray-100", className)}
+    />
   );
 }
