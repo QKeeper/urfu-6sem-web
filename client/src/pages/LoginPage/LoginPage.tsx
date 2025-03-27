@@ -62,7 +62,9 @@ function LoginPage() {
           Login
         </Form.Submit>
 
-        <Form.Link to="/register">Don't have an account yet?</Form.Link>
+        <Form.Link replace to="/register">
+          Don't have an account yet?
+        </Form.Link>
       </Form>
     </div>
   );

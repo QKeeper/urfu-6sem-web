@@ -88,7 +88,9 @@ function RegisterPage() {
           Register
         </Form.Submit>
 
-        <Form.Link to="/login">Already have an acoount?</Form.Link>
+        <Form.Link replace to="/login">
+          Already have an acoount?
+        </Form.Link>
       </Form>
     </div>
   );
