@@ -27,6 +27,18 @@ export const authSlice = createAppSlice({
         state.isPending = false;
       },
     }),
+    logout: create.asyncThunk(API.Auth.logout, {
+      pending: (state) => {
+        state.isPending = true;
+      },
+      fulfilled: (state) => {
+        state.user = null;
+        state.isPending = false;
+      },
+      rejected: (state) => {
+        state.isPending = false;
+      },
+    }),
   }),
   selectors: {
     selectUser: (state) => state.user,
@@ -34,5 +46,5 @@ export const authSlice = createAppSlice({
   },
 });
 
-export const { setUser, fetchUser } = authSlice.actions;
+export const { setUser, fetchUser, logout } = authSlice.actions;
 export const { selectUser, selectUserIsPending } = authSlice.selectors;

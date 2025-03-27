@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppLayout from "./AppLayout";
 import { lazy } from "react";
 import ProfileEditPage from "@/pages/ProfileEditPage/ProfileEditPage";
+import LogoutPage from "@/pages/LogoutPage/LogoutPage";
 
 const Homepage = lazy(() => import("@/pages/Homepage/Homepage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage/LoginPage"));
@@ -20,6 +21,7 @@ export default function AppRouter() {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/logout" element={<LogoutPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -14,13 +14,19 @@ function ProfilePage() {
     <div className="container mx-auto max-w-screen-md">
       <p className="text-3xl">{authedUser.displayName}</p>
       <p className="text-gray-500">@{authedUser.username}</p>
-      <div className="mt-4">
-        {username == authedUser.username && (
-          <Link to="/edit" className="rounded border border-gray-300 px-3 py-1 outline-none hover:bg-gray-50">
+      {username == authedUser.username && (
+        <div className="mt-4 flex gap-2">
+          <Link to="/edit" className="rounded border border-gray-300 px-3 py-1 text-sm outline-none hover:bg-gray-50">
             Edit Profile
           </Link>
-        )}
-      </div>
+          <Link
+            to="/logout"
+            className="rounded border border-red-300 px-3 py-1 text-sm text-red-500 outline-none hover:bg-red-50"
+          >
+            Log Out
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
