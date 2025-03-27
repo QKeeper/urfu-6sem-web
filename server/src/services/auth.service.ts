@@ -8,7 +8,7 @@ import { User } from "@prisma/client";
 export class AuthService {
   constructor(private authRepository: AuthRepository) {}
 
-  createUser = async (userData: Omit<User, "id">) => {
+  createUser = async (userData: Omit<User, "id" | "roleId">) => {
     userData.password = bcrypt.hashSync(userData.password, ROUNDS);
     const user = await this.authRepository.createUser(userData);
     const token = this.generateToken(user);

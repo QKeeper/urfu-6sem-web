@@ -5,7 +5,7 @@ export class AuthRepository {
 
   prisma = new PrismaClient();
 
-  async createUser(userData: Omit<User, "id">) {
+  async createUser(userData: Omit<User, "id" | "roleId">) {
     const user = await this.prisma.user.create({ data: userData });
     return user;
   }

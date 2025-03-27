@@ -1,14 +1,10 @@
 import { API } from "@/api";
-import { ILoginFields, ILoginResponse } from "@/api.models";
+import { ILoginResponse, IRegisterFields } from "@/api.models";
 import Form from "@/components/ui/Form/Form";
 import { AxiosError, isAxiosError } from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
-interface IRegisterFields extends ILoginFields {
-  confirmPassword: string;
-}
 
 function RegisterPage() {
   const {
@@ -51,6 +47,15 @@ function RegisterPage() {
         {errors.username?.type == "required" && <Form.Error>Field is required</Form.Error>}
         {errors.username?.type == "minLength" && <Form.Error>Minimum 3 characters long</Form.Error>}
         {errors.username?.type == "maxLength" && <Form.Error>Maximum 32 characters long</Form.Error>}
+
+        <Form.Input
+          placeholder="Display Name"
+          {...register("displayName", { required: true, minLength: 1, maxLength: 64 })}
+        />
+        {errors.displayName?.type == "required" && <Form.Error>Field is required</Form.Error>}
+        {errors.displayName?.type == "minLength" && <Form.Error>Minimum 1 characters long</Form.Error>}
+        {errors.displayName?.type == "maxLength" && <Form.Error>Maximum 64 characters long</Form.Error>}
+
         <Form.Input
           type="password"
           placeholder="Password"

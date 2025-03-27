@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ILoginFields } from "./api.models";
+import { ILoginFields, IRegisterFields } from "./api.models";
 import { IUser } from "./features/auth/authModel";
 
 const baseURL = import.meta.env.PROD ? "/api" : "http://localhost:3000/api";
@@ -22,8 +22,8 @@ export const API = {
       const response = await apiClient.post<ILoginFields>("/auth/login", data);
       return response.data;
     },
-    register: async (data: ILoginFields) => {
-      const response = await apiClient.post<ILoginFields>("/auth/register", data);
+    register: async (data: IRegisterFields) => {
+      const response = await apiClient.post<Omit<IRegisterFields, "confirmPassword">>("/auth/register", data);
       return response.data;
     },
     me: async () => {

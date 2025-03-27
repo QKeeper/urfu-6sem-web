@@ -31,7 +31,12 @@ export class AuthController {
 
   register = async (req: Request, res: Response) => {
     try {
-      const { token } = await this.authService.createUser(req.body);
+      const { username, displayName, password } = req.body;
+      const { token } = await this.authService.createUser({
+        username,
+        displayName,
+        password,
+      });
       return void res
         .cookie(TOKEN, token, { secure: true, httpOnly: true, sameSite: "strict" })
         .sendStatus(200);
