@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { ROUNDS, SECRET } from "../config";
 import { ITokenPayload } from "../models/auth.model";
 import { AuthRepository } from "../repositories/auth.repository";

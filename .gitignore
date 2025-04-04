@@ -1,7 +1,16 @@
+# IDE
+.vscode
+
+# ENVIRONMENT
 .env*
+!.env.example
+
+# MODULES
 node_modules
 package-lock.json
+
+# BUILD
 dist
-.vscode
+
+# MIGRATIONS
 server/prisma/migrations
-server/uploads
