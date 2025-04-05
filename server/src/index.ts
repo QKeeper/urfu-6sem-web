@@ -1,10 +1,8 @@
 import "dotenv/config";
 import { AppOptions, createApp } from "./app";
+import { createServer } from "./server";
 import authRouter from "./routes/auth.routes";
 import usersRouter from "./routes/users.routes";
-import { createServer } from "./server";
-import { PrismaClient } from "@prisma/client";
-import { initializeDatabase } from "./prisma";
 
 const appOptions: AppOptions = {
   routes: [
@@ -16,4 +14,4 @@ const appOptions: AppOptions = {
 const app = createApp(appOptions);
 const server = createServer(app);
 
-initializeDatabase().then(server.listen);
+server.listen();

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
-import { TOKEN } from "../config";
+import cfg from "../config";
 import { body } from "express-validator";
 import { validate } from "../utils/validate";
 
@@ -38,7 +38,7 @@ export class AuthController {
         password,
       });
       return void res
-        .cookie(TOKEN, token, { secure: true, httpOnly: true, sameSite: "strict" })
+        .cookie(cfg.TOKEN, token, { secure: true, httpOnly: true, sameSite: "strict" })
         .sendStatus(200);
     } catch (error) {
       console.error(error);
@@ -50,7 +50,7 @@ export class AuthController {
     try {
       const { token } = await this.authService.loginUser(req.body);
       return void res
-        .cookie(TOKEN, token, { secure: true, httpOnly: true, sameSite: "strict" })
+        .cookie(cfg.TOKEN, token, { secure: true, httpOnly: true, sameSite: "strict" })
         .sendStatus(200);
     } catch (error) {
       console.error(error);
@@ -60,7 +60,7 @@ export class AuthController {
 
   logout = (_: Request, res: Response) => {
     return void res
-      .clearCookie(TOKEN, { secure: true, httpOnly: true, sameSite: "strict" })
+      .clearCookie(cfg.TOKEN, { secure: true, httpOnly: true, sameSite: "strict" })
       .sendStatus(200);
   };
 

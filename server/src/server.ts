@@ -1,35 +1,30 @@
 import { createServer as createHttpServer, Server } from "http";
 import { Server as SocketIOServer } from "socket.io";
 import { Express } from "express-serve-static-core";
-import * as cfg from "./config";
+import cfg from "./config";
+import { initializeDatabase } from "./prisma";
 
-interface ServerOptions {
-  port?: number;
-  socket_port?: number;
-  origin?: string;
-}
+interface ServerOptions {}
 
 export function createServer(app: Express, options?: ServerOptions) {
   const server = createHttpServer(app);
-
-  const port = options?.port || cfg.PORT;
   const ws = configureSockets(server, options);
 
   return {
     instance: server,
-    listen: () => {
-      server.listen(port, () => console.log("Server is running on port", port));
+    listen: async () => {
+      await initializeDatabase();
+      server.listen(cfg.PORT, () => console.log("Server is running on port", cfg.PORT));
       ws.listen();
     },
   };
 }
 
 function configureSockets(server: Server, options?: ServerOptions) {
-  const origin = options?.origin || cfg.ORIGIN;
-  const socket_port = options?.socket_port || cfg.SOCKET_PORT;
-  const io = new SocketIOServer(server, { cors: { origin } });
+  const io = new SocketIOServer(server, { cors: { origin: cfg.ORIGIN } });
   return {
     instance: io,
-    listen: () => io.listen(socket_port, { cookie: true, cors: { credentials: true, origin } }),
+    listen: () =>
+      io.listen(cfg.SOCKET_PORT, { cookie: true, cors: { credentials: true, origin: cfg.ORIGIN } }),
   };
 }

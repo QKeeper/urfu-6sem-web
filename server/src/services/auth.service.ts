@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { ROUNDS, SECRET } from "../config";
+import cfg from "../config";
 import { ITokenPayload } from "../models/auth.model";
 import { AuthRepository } from "../repositories/auth.repository";
 import { User } from "@prisma/client";
@@ -9,7 +9,7 @@ export class AuthService {
   constructor(private authRepository: AuthRepository) {}
 
   createUser = async (userData: Omit<User, "id" | "roleId">) => {
-    userData.password = bcrypt.hashSync(userData.password, ROUNDS);
+    userData.password = bcrypt.hashSync(userData.password, cfg.ROUNDS);
     const user = await this.authRepository.createUser(userData);
     const token = this.generateToken(user);
     return { token };
@@ -27,6 +27,6 @@ export class AuthService {
 
   generateToken = (payload: { id: string }) => {
     const { id }: ITokenPayload = payload;
-    return jwt.sign({ id }, SECRET, { expiresIn: "1d" });
+    return jwt.sign({ id }, cfg.SECRET, { expiresIn: "1d" });
   };
 }

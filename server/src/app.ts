@@ -2,7 +2,7 @@ import express, { Express, json, RequestHandler, Router } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
-import * as cfg from "./config";
+import cfg from "./config";
 
 export interface AppOptions {
   origin?: string;
