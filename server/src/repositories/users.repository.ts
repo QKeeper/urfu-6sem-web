@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+import { Repository } from "../models/repository.model";
 
-export class UsersRepository {
+export class UsersRepository implements Repository {
   prisma = new PrismaClient();
 
   getUserByUsername = async (username: string) => {

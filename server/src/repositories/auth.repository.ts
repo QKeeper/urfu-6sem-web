@@ -1,6 +1,7 @@
 import { PrismaClient, User } from "@prisma/client";
+import { Repository } from "../models/repository.model";
 
-export class AuthRepository {
+export class AuthRepository implements Repository {
   constructor() {}
 
   prisma = new PrismaClient();
