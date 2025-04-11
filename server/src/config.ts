@@ -2,7 +2,7 @@ import path from "path";
 import "dotenv/config";
 
 const cfg = {
-  PORT: process.env.PORT || 3200,
+  PORT: process.env.PORT || 3000,
   SOCKET_PORT: Number(process.env.SOCKET_PORT) || 4000,
   CLIENT_PATH: path.resolve(__dirname, "..", "..", "client", "dist"),
 

@@ -18,6 +18,16 @@ export class TaskController {
     }
   };
 
+  getMy = async (req: Request, res: Response) => {
+    if (!req.user) {
+      res.sendStatus(401);
+      return;
+    }
+    const result = await this.service.getByUsername(req.user.username);
+    if (result) res.send(result);
+    else res.sendStatus(404);
+  };
+
   getById = async (req: Request, res: Response) => {
     const { id } = req.params;
     const result = await this.service.getById(id);
@@ -30,7 +40,16 @@ export class TaskController {
 
   deleteById = async (req: Request, res: Response) => {
     const { id } = req.params;
+
+    const task = await this.service.getById(id);
+
+    if (!req.user || !task || req.user.id !== task.userId) {
+      res.status(403).send({ message: "Access denied" });
+      return;
+    }
+
     const result = await this.service.deleteById(id);
+
     if (result) {
       res.send(result);
     } else {
@@ -41,13 +60,8 @@ export class TaskController {
   patchById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    type TaskFields = Pick<Task, keyof Omit<Task, "userId"> & keyof typeof req.body>;
-
-    const data: TaskFields = Object.fromEntries(
-      Object.entries(req.body).filter(([key]) => key in data)
-    ) as TaskFields;
-
-    const result = await this.service.patchById(id, data);
+    const { title, completed, userId } = req.body;
+    const result = await this.service.patchById(id, { title, completed, userId });
 
     if (result) {
       res.send(result);

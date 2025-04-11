@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppLayout from "./AppLayout";
 import { lazy } from "react";
-import ProfileEditPage from "@/pages/ProfileEditPage/ProfileEditPage";
-import LogoutPage from "@/pages/LogoutPage/LogoutPage";
-import NotFound from "@/pages/NotFound/NotFound";
 
 const Homepage = lazy(() => import("@/pages/Homepage/Homepage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage/RegisterPage"));
+const LogoutPage = lazy(() => import("@/pages/LogoutPage/LogoutPage"));
 const ProfilePage = lazy(() => import("@/pages/ProfilePage/ProfilePage"));
+const ProfileEditPage = lazy(() => import("@/pages/ProfileEditPage/ProfileEditPage"));
+const NotFound = lazy(() => import("@/pages/NotFound/NotFound"));
 
 export default function AppRouter() {
   return (
