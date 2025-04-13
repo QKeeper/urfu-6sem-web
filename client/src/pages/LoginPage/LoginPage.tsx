@@ -1,6 +1,7 @@
-import { API } from "@/api";
 import { ILoginFields, ILoginResponse } from "@/api.models";
+import { useAppDispatch } from "@/app/hooks";
 import Form from "@/components/ui/Form/Form";
+import { loginUser } from "@/features/auth/authSlice";
 import { AxiosError, isAxiosError } from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -15,12 +16,14 @@ function LoginPage() {
   } = useForm<ILoginFields>();
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [isPending, setIsPending] = useState(false);
 
   const onSubmit: SubmitHandler<ILoginFields> = (data) => {
     setIsPending(true);
-    API.Auth.login(data)
+
+    dispatch(loginUser(data))
       .then(() => navigate("/"))
       .catch((err) => {
         if (isAxiosError(err)) {

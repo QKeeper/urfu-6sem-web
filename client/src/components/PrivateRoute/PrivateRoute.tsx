@@ -1,6 +1,7 @@
 import { useAppSelector } from "@/app/hooks";
 import { Permission } from "@/features/auth/authModel";
 import { selectUser, selectUserIsPending } from "@/features/auth/authSlice";
+import { Suspense } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 interface PrivateRouteProps {
@@ -11,10 +12,8 @@ export default function PrivateRoute({ permissions }: PrivateRouteProps) {
   const user = useAppSelector(selectUser);
   const isPending = useAppSelector(selectUserIsPending);
 
-  if (!user) {
-    if (!isPending) return <Navigate replace to="/login" />;
-    return null;
-  }
+  if (isPending) return null;
+  if (!user) return <Navigate replace to="/login" />;
 
   if (permissions) {
     let access = false;
@@ -25,5 +24,9 @@ export default function PrivateRoute({ permissions }: PrivateRouteProps) {
     if (!access) return <Navigate replace to="/" />;
   }
 
-  return <Outlet />;
+  return (
+    <Suspense>
+      <Outlet />
+    </Suspense>
+  );
 }

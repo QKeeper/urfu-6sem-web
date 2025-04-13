@@ -19,7 +19,7 @@ if (import.meta.env.DEV) {
 export const API = {
   Auth: {
     login: async (data: ILoginFields) => {
-      const response = await apiClient.post<ILoginFields>("/auth/login", data);
+      const response = await apiClient.post<IUser>("/auth/login", data);
       return response.data;
     },
     register: async (data: IRegisterFields) => {

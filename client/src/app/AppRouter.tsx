@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppLayout from "./AppLayout";
 import { lazy } from "react";
 
+const PrivateRoute = lazy(() => import("@/components/PrivateRoute/PrivateRoute"));
 const Homepage = lazy(() => import("@/pages/Homepage/Homepage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage/RegisterPage"));
@@ -15,7 +16,9 @@ export default function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AppLayout />}>
-          <Route index element={<Homepage />} />
+          <Route path="/" element={<PrivateRoute />}>
+            <Route index element={<Homepage />} />
+          </Route>
           <Route path="/user/:username" element={<ProfilePage />} />
           <Route path="/edit" element={<ProfileEditPage />} />
           <Route path="*" element={<NotFound />} />
@@ -23,7 +26,7 @@ export default function AppRouter() {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/logout" element={<LogoutPage />} />
+        <Route path="/logout" element={<LogoutPage to="/login" />} />
       </Routes>
     </BrowserRouter>
   );
