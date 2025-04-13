@@ -36,9 +36,20 @@ export const tasksSlice = createAppSlice({
         },
       },
     ),
+    deleteTask: create.asyncThunk(
+      async (id: string) => {
+        API.Task.delete(id);
+        return id;
+      },
+      {
+        fulfilled: (state, action) => {
+          state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+        },
+      },
+    ),
   }),
   selectors: { selectTasks: (state) => state.tasks, selectIsPending: (state) => state.isPending },
 });
 
-export const { fetchMyTasks, createTask, modifyTask } = tasksSlice.actions;
+export const { fetchMyTasks, createTask, modifyTask, deleteTask } = tasksSlice.actions;
 export const { selectTasks, selectIsPending: selectTasksIsPending } = tasksSlice.selectors;
