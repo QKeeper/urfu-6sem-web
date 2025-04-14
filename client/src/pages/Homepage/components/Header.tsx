@@ -1,19 +1,14 @@
 import { useAppDispatch } from "@/app/hooks";
 import { createTask } from "@/features/tasks/tasksSlice";
-import { ListCheckIcon, ListOrderedIcon, ListXIcon, PlusIcon } from "lucide-react";
+import { ArrowDown01Icon, ArrowDownAZIcon, ListCheckIcon, ListOrderedIcon, ListXIcon, PlusIcon } from "lucide-react";
 import { useCallback } from "react";
-import { useCategory } from "../CategoryContext";
+import { CATEGORY, SORT, useCategory } from "../CategoryContext";
 
 export default function Header() {
   const dispatch = useAppDispatch();
-  const { selectedCategory, setSelectedCategory } = useCategory();
+  const { category, nextCategory, sort, nextSort } = useCategory();
 
   const addTaskHandler = useCallback(() => dispatch(createTask({ title: "New Task" })), [dispatch]);
-
-  const nextCategory = useCallback(
-    () => setSelectedCategory((prev) => (prev < 2 ? prev + 1 : 0)),
-    [setSelectedCategory],
-  );
 
   return (
     <div className="flex h-10 items-center gap-2">
@@ -23,26 +18,42 @@ export default function Header() {
       >
         <PlusIcon /> Add Task
       </button>
+
       <button
         onClick={nextCategory}
-        className="flex cursor-pointer gap-1 rounded p-1 pr-2 capitalize outline outline-gray-950 hover:bg-gray-50"
+        className="flex cursor-pointer gap-1 rounded p-1 pr-2 outline outline-gray-950 hover:bg-gray-50"
       >
-        {selectedCategory === 0 && (
+        {category === CATEGORY.ALL && (
           <>
             <ListOrderedIcon />
             All
           </>
         )}
-        {selectedCategory === 1 && (
+        {category === CATEGORY.COMPLETED && (
           <>
             <ListCheckIcon />
             Completed
           </>
         )}
-        {selectedCategory === 2 && (
+        {category === CATEGORY.UNCOMPLETED && (
           <>
             <ListXIcon />
             Uncompleted
+          </>
+        )}
+      </button>
+
+      <button className="flex cursor-pointer gap-1 rounded p-1 pr-2 outline outline-gray-950" onClick={nextSort}>
+        {sort == SORT.NAME && (
+          <>
+            <ArrowDownAZIcon />
+            By Name
+          </>
+        )}
+        {sort == SORT.CREATED && (
+          <>
+            <ArrowDown01Icon />
+            By Date
           </>
         )}
       </button>

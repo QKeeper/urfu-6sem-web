@@ -5,7 +5,6 @@ import cn from "@/utils/cn";
 import { SquareCheckBigIcon, SquareIcon } from "lucide-react";
 import { useState } from "react";
 import DebouncedInput from "./DebouncedInput";
-import { API } from "@/api";
 import TaskContextMenu from "./TaskContextMenu";
 
 interface TaskProps {
@@ -24,12 +23,12 @@ export default function Task({ task }: TaskProps) {
 
   const onChangeHandler = (value: string | number | readonly string[] | undefined) => {
     if (value) {
-      API.Task.modify(task.id, { title: "" + value });
+      dispatch(modifyTask({ id: task.id, title: "" + value }));
     }
   };
 
   return (
-    <div className={cn("group flex items-center gap-2 rounded px-2 hover:bg-gray-50", { "opacity-40": completed })}>
+    <div className={cn("group flex items-center gap-2 rounded px-2 hover:bg-gray-50", { "opacity-60": completed })}>
       <button onClick={() => toggleTaskHandler(task.id, !completed)} className="cursor-pointer">
         {completed ? <SquareCheckBigIcon /> : <SquareIcon />}
       </button>
@@ -38,6 +37,7 @@ export default function Task({ task }: TaskProps) {
         onDebouncedChange={onChangeHandler}
         defaultValue={task.title}
         className="w-full py-2 outline-none"
+        placeholder="Empty Title"
       />
 
       <TaskContextMenu className="invisible group-hover:visible" task={task} />

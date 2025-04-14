@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction, useContext } from "react";
+import { createContext, useContext } from "react";
 
 export enum CATEGORY {
   ALL,
@@ -6,12 +6,20 @@ export enum CATEGORY {
   UNCOMPLETED,
 }
 
-export type THomepageContext = {
-  selectedCategory: CATEGORY;
-  setSelectedCategory: Dispatch<SetStateAction<CATEGORY>>;
+export enum SORT {
+  NAME,
+  CREATED,
+}
+
+export type TCategoryContext = {
+  category: CATEGORY;
+  sort: SORT;
+
+  nextCategory: () => void;
+  nextSort: () => void;
 } | null;
 
-export const CategoryContext = createContext<THomepageContext>(null);
+export const CategoryContext = createContext<TCategoryContext>(null);
 
 export function useCategory() {
   const ctx = useContext(CategoryContext);
