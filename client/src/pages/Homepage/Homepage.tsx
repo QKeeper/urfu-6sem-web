@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { fetchMyTasks, selectTasksIsPending } from "@/features/tasks/tasksSlice";
 import { useEffect } from "react";
 import Header from "./components/Header";
-import CategoryProvider from "./CategoryProvider";
+import TaskFilterSortProvider from "./TaskFilterSortProvider";
 import TaskList from "./components/TaskList";
 
 export default function Homepage() {
@@ -16,11 +16,11 @@ export default function Homepage() {
   if (isPending) return null;
 
   return (
-    <CategoryProvider>
+    <TaskFilterSortProvider>
       <div className="container mx-auto flex flex-col gap-2 px-1">
         <Header />
         <TaskList />
       </div>
-    </CategoryProvider>
+    </TaskFilterSortProvider>
   );
 }

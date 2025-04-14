@@ -11,7 +11,7 @@ export enum SORT {
   CREATED,
 }
 
-export type TCategoryContext = {
+export type TTaskFilterSortContext = {
   category: CATEGORY;
   sort: SORT;
 
@@ -19,10 +19,10 @@ export type TCategoryContext = {
   nextSort: () => void;
 } | null;
 
-export const CategoryContext = createContext<TCategoryContext>(null);
+export const TaskFilterSortContext = createContext<TTaskFilterSortContext>(null);
 
-export function useCategory() {
-  const ctx = useContext(CategoryContext);
+export function useTaskFilterSort() {
+  const ctx = useContext(TaskFilterSortContext);
   if (!ctx) throw new Error("Must be within CategoryContext");
   return ctx;
 }

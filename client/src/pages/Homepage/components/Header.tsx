@@ -2,11 +2,11 @@ import { useAppDispatch } from "@/app/hooks";
 import { createTask } from "@/features/tasks/tasksSlice";
 import { ArrowDown01Icon, ArrowDownAZIcon, ListCheckIcon, ListOrderedIcon, ListXIcon, PlusIcon } from "lucide-react";
 import { useCallback } from "react";
-import { CATEGORY, SORT, useCategory } from "../CategoryContext";
+import { CATEGORY, SORT, useTaskFilterSort } from "../TaskFilterSortContext";
 
 export default function Header() {
   const dispatch = useAppDispatch();
-  const { category, nextCategory, sort, nextSort } = useCategory();
+  const { category, nextCategory, sort, nextSort } = useTaskFilterSort();
 
   const addTaskHandler = useCallback(() => dispatch(createTask({ title: "New Task" })), [dispatch]);
 

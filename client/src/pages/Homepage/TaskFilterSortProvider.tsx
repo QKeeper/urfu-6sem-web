@@ -1,7 +1,7 @@
 import { ReactNode, useCallback, useState } from "react";
-import { CATEGORY, CategoryContext, SORT } from "./CategoryContext";
+import { CATEGORY, TaskFilterSortContext, SORT } from "./TaskFilterSortContext";
 
-export default function CategoryProvider({ children }: { children?: ReactNode }) {
+export default function TaskFilterSortProvider({ children }: { children?: ReactNode }) {
   const [category, setCategory] = useState<CATEGORY>(CATEGORY.ALL);
   const [sort, setSort] = useState<SORT>(SORT.CREATED);
 
@@ -19,5 +19,5 @@ export default function CategoryProvider({ children }: { children?: ReactNode })
 
   const defaultValue = { category, nextCategory, sort, nextSort };
 
-  return <CategoryContext.Provider value={defaultValue} children={children} />;
+  return <TaskFilterSortContext.Provider value={defaultValue} children={children} />;
 }

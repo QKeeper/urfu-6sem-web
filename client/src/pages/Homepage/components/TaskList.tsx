@@ -1,11 +1,11 @@
 import { useAppSelector } from "@/app/hooks";
-import { CATEGORY, SORT, useCategory } from "../CategoryContext";
+import { CATEGORY, SORT, useTaskFilterSort } from "../TaskFilterSortContext";
 import Task from "./Task";
 import { selectTasks } from "@/features/tasks/tasksSlice";
 
 export default function TaskList() {
   const tasks = useAppSelector(selectTasks);
-  const { category, sort } = useCategory();
+  const { category, sort } = useTaskFilterSort();
 
   const filteredTasks = tasks.filter((task) => {
     if (category === CATEGORY.ALL) return true;
