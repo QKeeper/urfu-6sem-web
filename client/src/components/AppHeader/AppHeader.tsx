@@ -14,7 +14,7 @@ export default function AppHeader() {
   return (
     <header className="border-b border-gray-300">
       <div className="container mx-auto flex h-10 items-center gap-1 px-1">
-        <NavLink to="/">Tasks</NavLink>
+        <NavLink to="/">Home</NavLink>
         {!user ? (
           <>
             <NavLink to="/login" className="ml-auto">
@@ -26,7 +26,7 @@ export default function AppHeader() {
           <>
             <NavLink to={"/user/" + user.username} className="ml-auto">
               <User2Icon className="size-4" />
-              {user.username}
+              {user.displayName}
             </NavLink>
           </>
         )}
