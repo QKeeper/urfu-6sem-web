@@ -4,11 +4,9 @@ import { Express } from "express-serve-static-core";
 import cfg from "./config";
 import { initializeDatabase } from "./prisma";
 
-interface ServerOptions {}
-
-export function createServer(app: Express, options?: ServerOptions) {
+export function createServer(app: Express) {
   const server = createHttpServer(app);
-  const ws = configureSockets(server, options);
+  const ws = configureSockets(server);
 
   return {
     instance: server,
@@ -20,7 +18,7 @@ export function createServer(app: Express, options?: ServerOptions) {
   };
 }
 
-function configureSockets(server: Server, options?: ServerOptions) {
+function configureSockets(server: Server) {
   const io = new SocketIOServer(server, { cors: { origin: cfg.ORIGIN } });
   return {
     instance: io,

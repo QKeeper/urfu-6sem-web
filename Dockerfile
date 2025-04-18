@@ -1,19 +1,27 @@
-# FIXME: Не билдится ни фронт, ни бэк
-
-FROM node:18-alpine AS client-builder
+FROM node:23-alpine AS builder-client
 
 WORKDIR /app/client
-COPY client/package*.json ./
-RUN npm install
-COPY client ./
+
+COPY client/package.json client/package-lock.json* ./
+
+RUN npm ci
+
+COPY client/ ./
+
 RUN npm run build
 
 WORKDIR /app/server
-COPY server/package*.json ./
-RUN npm install
-COPY server ./
+
+COPY server/package.json server/package-lock.json* ./
+
+RUN npm ci
+
+COPY server/ ./
 
 RUN npx prisma generate
+
 RUN npm run build
 
-CMD ["node", "dist/index.js"]
+EXPOSE 3000
+
+CMD ["npm", "start"]

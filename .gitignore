@@ -11,6 +11,7 @@ package-lock.json
 
 # BUILD
 dist
+tsconfig.tsbuildinfo
 
 # MIGRATIONS
 server/prisma/migrations
